@@ -5,7 +5,7 @@ const BookSchema = new mongoose.Schema({
     type: String,
     required: [true, '`{PATH}` alanı zorunludur'],
     minlength: [4, '`{PATH}` en az ({MINLENGTH}) karakter olmalıdır.'],
-    maxlength: [20, '`{PATH}` en fazla ({MAXLENGTH}) karakter olmalıdır.'],
+    maxlength: [50, '`{PATH}` en fazla ({MAXLENGTH}) karakter olmalıdır.'],
   },
   description: String,
   year: {

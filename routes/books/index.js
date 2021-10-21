@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const cache = require('../../helpers/cache');
+const limiter = require('../../helpers/rate-limiter');
+
 const schema = require('./validations');
 const Book = require('../../models/Book');
 
-router.get('/', async (req, res, next) => {
+router.get('/', cache.route({ expire: 60 * 60 }), async (req, res, next) => {
   try {
     const books = await Book.find({});
     res.json(books);
@@ -13,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', cache.route({ expire: 60 }), async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -24,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', limiter, async (req, res, next) => {
   try {
     await schema.validateAsync(req.body);
 
