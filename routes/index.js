@@ -3,7 +3,7 @@ const router = express.Router();
 const cache = require('../helpers/cache');
 
 /* GET home page. */
-router.get('/', cache.route({ expire: 30 }), function (req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('index', { title: 'Express' });
 });
 
